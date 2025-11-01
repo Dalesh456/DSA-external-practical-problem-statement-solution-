@@ -7,121 +7,123 @@ c)      Display members
 */
 
 #include <stdio.h>
-#include <stdlib.h>   // for malloc and free functions
+#include <stdlib.h>
 
 struct Node {
-    int roll_no;
-    struct Node* next;
+    int roll;
+    struct Node *next;
 };
 
-struct Node* head = NULL, *temp = NULL;
+struct Node *head = NULL , *temp = NULL;
 
-void addMember(int roll_no) {
-    struct Node* new_member = (struct Node*)malloc(sizeof(struct Node));
-    new_member->roll_no = roll_no;
-    new_member->next = NULL;
-    if (head == NULL) {
-        head = new_member;
-        printf("Member with roll no %d added.\n", roll_no);
-        return;
-    }
+// Add new member (at end)
+void addMember(int roll) {
+    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->roll = roll;
+    newNode->next = NULL;
+
+    if (head == NULL)
+        head = newNode;
     else {
         temp = head;
-        while (temp->next != NULL) {
+        while (temp->next != NULL){
             temp = temp->next;
         }
-        temp->next = new_member;
-    } 
-
-    printf("Member with roll no %d added.\n", roll_no);
+        temp->next = newNode;
+    }
+    printf("Member added successfully!\n");
 }
 
+// Delete a member
+void deleteMember(int roll) {
+    struct Node *temp = head, *prev = NULL;
 
-void deleteMember(int roll_no) {
-    struct Node* current = head;
-    struct Node* previous = NULL;
-
-    while (current != NULL && current->roll_no != roll_no) {
-        previous = current;
-        current = current->next;
+    while (temp->next != NULL && temp->roll != roll) {
+        prev = temp;
+        temp = temp->next;
     }
-
-    if (current == NULL) {
-        printf("Member with roll no %d not found.\n", roll_no);
+    if (temp == NULL) {
+        printf("Member not found!\n");
         return;
     }
+    if (head == temp) // Deleting head
+        head = head->next;
+    else
+        prev->next = temp->next;
 
-    if (previous == NULL) {
-        head = current->next;
-    } else {
-        previous->next = current->next;
-    }
-
-    free(current);
-    printf("Member with roll no %d deleted.\n", roll_no);
+    free(temp);
+    printf("Member deleted successfully!\n");
 }
 
-int countMembers() {
-    int count = 0;
-    struct Node* current = head;
-    while (current != NULL) {
-        count++;
-        current = current->next;
-    }
-    return count;
-}
-
+// Display all members
 void displayMembers() {
-    struct Node* current = head;
-    if (current == NULL) {
-        printf("No members found.\n");
+    struct Node *temp = head;
+    if (temp == NULL) {
+        printf("No members in the club.\n");
         return;
     }
-    printf("Club Members (Roll No): ");
-    while (current != NULL) {
-        printf("%d ", current->roll_no);
-        current = current->next;
+    printf("Club Members: ");
+    while (temp->next != NULL) {
+        printf("%d ", temp->roll);
+        temp = temp->next;
     }
+    temp = temp->next;
     printf("\n");
 }
 
-int main() {
-    int choice, roll_no;
+// Count total members
+void countMembers() {
+    int count = 0;
+    struct Node *temp = head;
+    while (temp->next != NULL) {
+        count++;
+        temp = temp->next;
+    }
+    printf("Total Members: %d\n", count);
+}
 
-    while (1) {
-        printf("\nClub Membership Menu:\n");
+int main() {
+    int choice, roll;
+
+    do {
+        printf("\n--- Club Membership Menu ---\n");
         printf("1. Add Member\n");
         printf("2. Delete Member\n");
-        printf("3. Count Members\n");
-        printf("4. Display Members\n");
+        printf("3. Display Members\n");
+        printf("4. Count Members\n");
         printf("5. Exit\n");
-        printf("Enter your choice: ");
+        printf("Enter choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
             case 1:
-                printf("Enter roll no to add: ");
-                scanf("%d", &roll_no);
-                addMember(roll_no);
+                printf("Enter roll number: ");
+                scanf("%d", &roll);
+                addMember(roll);
                 break;
+
             case 2:
-                printf("Enter roll no to delete: ");
-                scanf("%d", &roll_no);
-                deleteMember(roll_no);
+                printf("Enter roll number to delete: ");
+                scanf("%d", &roll);
+                deleteMember(roll);
                 break;
+
             case 3:
-                printf("Total members: %d\n", countMembers());
-                break;
-            case 4:
                 displayMembers();
                 break;
+
+            case 4:
+                countMembers();
+                break;
+
             case 5:
-                printf("Exiting...\n");
-                exit(0);
+                printf("Exiting program.\n");
+                break;
+
             default:
-                printf("Invalid choice. Please try again.\n");
+                printf("Invalid choice! Try again.\n");
         }
-    }
+    } while (choice != 5);
 
     return 0;
 }

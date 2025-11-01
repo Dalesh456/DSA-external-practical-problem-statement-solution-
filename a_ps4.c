@@ -6,7 +6,7 @@ struct Node {
     struct Node *next;
 };
 
-struct Node *head = NULL;
+struct Node *head = NULL , *temp = NULL;
 
 // Add new member (at end)
 void addMember(int roll) {
@@ -17,12 +17,12 @@ void addMember(int roll) {
     if (head == NULL)
         head = newNode;
     else {
-        struct Node *temp = head;
-        while (temp->next != NULL)
+        temp = head;
+        while (temp->next != NULL){
             temp = temp->next;
+        }
         temp->next = newNode;
     }
-
     printf("Member added successfully!\n");
 }
 
@@ -30,18 +30,16 @@ void addMember(int roll) {
 void deleteMember(int roll) {
     struct Node *temp = head, *prev = NULL;
 
-    while (temp != NULL && temp->roll != roll) {
+    while (temp->next != NULL && temp->roll != roll) {
         prev = temp;
         temp = temp->next;
     }
-
     if (temp == NULL) {
         printf("Member not found!\n");
         return;
     }
-
-    if (prev == NULL)
-        head = temp->next;
+    if (head == temp) // Deleting head
+        head = head->next;
     else
         prev->next = temp->next;
 
@@ -57,10 +55,11 @@ void displayMembers() {
         return;
     }
     printf("Club Members: ");
-    while (temp != NULL) {
+    while (temp->next != NULL) {
         printf("%d ", temp->roll);
         temp = temp->next;
     }
+    temp = temp->next;
     printf("\n");
 }
 
@@ -68,7 +67,7 @@ void displayMembers() {
 void countMembers() {
     int count = 0;
     struct Node *temp = head;
-    while (temp != NULL) {
+    while (temp->next != NULL) {
         count++;
         temp = temp->next;
     }
