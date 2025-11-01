@@ -14,15 +14,28 @@ struct Node {
     struct Node* next;
 };
 
-struct Node* head = NULL;
+struct Node* head = NULL, *temp = NULL;
 
 void addMember(int roll_no) {
     struct Node* new_member = (struct Node*)malloc(sizeof(struct Node));
     new_member->roll_no = roll_no;
-    new_member->next = head;
-    head = new_member;
+    new_member->next = NULL;
+    if (head == NULL) {
+        head = new_member;
+        printf("Member with roll no %d added.\n", roll_no);
+        return;
+    }
+    else {
+        temp = head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = new_member;
+    } 
+
     printf("Member with roll no %d added.\n", roll_no);
 }
+
 
 void deleteMember(int roll_no) {
     struct Node* current = head;
