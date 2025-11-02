@@ -2,10 +2,6 @@
 chapters consist of sections and sections consist of subsections. Construct a tree 
 and print the nodes.*/
 
-/*14. Write a program to demonstrate a tree for a book that consists of chapters, the 
-chapters consist of sections and sections consist of subsections. Construct a tree 
-and print the nodes.*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -37,7 +37,7 @@ char *places[MAX] = {
 // Visited array to track visited nodes
 int visited[MAX];
 
-// DFS function
+// recursive way without stack
 void DFS(int start) {
     printf("%s\n", places[start]); // Visit the node
     visited[start] = 1;           // Mark it as visited

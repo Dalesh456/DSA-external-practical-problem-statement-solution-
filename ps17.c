@@ -31,6 +31,7 @@ char *places[MAX]={
 };
 int visited[MAX];
 
+//using queue without recursion
 void BFS(int start){
     int queue[MAX],front=0,rear=0;
     for(int i=0;i<MAX;i++)
