@@ -7,6 +7,7 @@ Fort, Parvati Hill Temple, Vishrambaug Wada, Bhide Wada) */
 #include<stdio.h>
 #define MAX 9
 int adj[MAX][MAX]={
+//   a b c d e f g h i
     {0,0,1,1,0,0,0,1,1},     //sw
     {0,0,1,0,1,0,0,0,0},     //Ak
     {1,1,0,0,0,0,1,0,0},     //pc
